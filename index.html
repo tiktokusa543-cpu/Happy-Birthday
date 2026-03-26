@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Someone Special ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    color:#fff;
+    overflow:hidden;
+}
+
+/* VIDEO BACKGROUND */
+video {
+    position:fixed;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
+}
+
+/* GLASS UI */
+.container {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.6);
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+    width:90%;
+    max-width:350px;
+}
+
+/* INPUT */
+input {
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin:10px;
+}
+
+/* BUTTON */
+button {
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:#ff4d6d;
+    color:#fff;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* TEXT */
+h1 {font-size:32px;}
+h2 {color:#ffd6e0;}
+
+/* CHAT */
+.msg {
+    background:#ff4d6d;
+    padding:10px;
+    border-radius:10px;
+    margin:5px 0;
+    animation:fade 1s ease;
+}
+
+@keyframes fade {
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+/* HEARTS */
+.heart {
+    position:absolute;
+    width:15px;
+    height:15px;
+    background:red;
+    transform:rotate(45deg);
+    animation:float 6s linear infinite;
+}
+@keyframes float {
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-800px);}
+}
+
+/* FIREWORK */
+.firework {
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:white;
+    border-radius:50%;
+    animation:boom 1s forwards;
+}
+@keyframes boom {
+    to{transform:scale(15); opacity:0;}
+}
+
+/* GIFT BOX */
+.gift {
+    font-size:60px;
+    cursor:pointer;
+    animation:shake 1s infinite;
+}
+@keyframes shake {
+    0%{transform:rotate(0);}
+    50%{transform:rotate(10deg);}
+    100%{transform:rotate(-10deg);}
+}
+
+/* COUNTDOWN */
+#timer {
+    font-size:18px;
+    margin-top:10px;
+}
+
+/* SLIDESHOW */
+img {
+    width:250px;
+    border-radius:15px;
+    margin-top:10px;
+}
+
+.hidden{display:none;}
+</style>
+</head>
+
+<body>
+
+<video autoplay muted loop>
+<source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+</video>
+
+<audio id="music" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
+
+<div class="container">
+
+<!-- LOGIN -->
+<div id="login">
+<h2>🔐 Enter Secret Code</h2>
+<input type="password" id="pass">
+<br>
+<button onclick="check()">Unlock ❤️</button>
+</div>
+
+<!-- STEP 1 -->
+<div id="s1" class="hidden">
+<button onclick="next(2)">💖 Click Me</button>
+</div>
+
+<!-- STEP 2 -->
+<div id="s2" class="hidden">
+<button onclick="next(3)">🎁 Surprise</button>
+</div>
+
+<!-- GIFT -->
+<div id="s3" class="hidden">
+<div class="gift" onclick="next(4)">🎁</div>
+<p>Click Gift</p>
+</div>
+
+<!-- FINAL -->
+<div id="s4" class="hidden">
+<h1>🎉 Happy Birthday A 🎉</h1>
+
+<div class="msg">You are my happiness ❤️</div>
+<div class="msg">You mean everything to me 💕</div>
+<div class="msg">I wish you endless joy 🎂</div>
+
+<img id="slide" src="https://picsum.photos/300?1">
+
+<div id="timer"></div>
+
+</div>
+
+</div>
+
+<script>
+
+/* PASSWORD */
+function check(){
+    if(document.getElementById("pass").value==="1234"){
+        login.classList.add("hidden");
+        s1.classList.remove("hidden");
+    } else alert("Wrong Password");
+}
+
+/* STEP FLOW */
+function next(n){
+    s1.classList.add("hidden");
+    s2.classList.add("hidden");
+    s3.classList.add("hidden");
+    s4.classList.add("hidden");
+
+    document.getElementById("s"+n).classList.remove("hidden");
+    music.play();
+
+    if(n===4){
+        hearts();
+        fireworks();
+        slideShow();
+        countdown();
+    }
+}
+
+/* HEARTS */
+function hearts(){
+    setInterval(()=>{
+        let h=document.createElement("div");
+        h.className="heart";
+        h.style.left=Math.random()*100+"vw";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),6000);
+    },300);
+}
+
+/* FIREWORKS */
+function fireworks(){
+    setInterval(()=>{
+        let f=document.createElement("div");
+        f.className="firework";
+        f.style.left=Math.random()*100+"vw";
+        f.style.top=Math.random()*100+"vh";
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),1000);
+    },200);
+}
+
+/* SLIDESHOW */
+let i=1;
+function slideShow(){
+    setInterval(()=>{
+        i++;
+        slide.src="https://picsum.photos/300?"+i;
+    },2000);
+}
+
+/* COUNTDOWN */
+function countdown(){
+    let end=new Date().getTime()+86400000;
+    setInterval(()=>{
+        let now=new Date().getTime();
+        let d=end-now;
+        let h=Math.floor(d/(1000*60*60));
+        let m=Math.floor((d%(1000*60*60))/(1000*60));
+        let s=Math.floor((d%(1000*60))/1000);
+        timer.innerHTML="⏳ "+h+"h "+m+"m "+s+"s left of your special day ❤️";
+    },1000);
+}
+
+</script>
+
+</body>
+</html>
